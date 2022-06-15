@@ -35,7 +35,7 @@ import (
 // should only add to matchmaker
 func TestMatchmakerAddOnly(t *testing.T) {
 	consoleLogger := loggerForTest(t)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, nil)
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, nil)
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -63,7 +63,7 @@ func TestMatchmakerAddOnly(t *testing.T) {
 
 func TestMatchmakerAddRemoveRepeated(t *testing.T) {
 	consoleLogger := loggerForTest(t)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, nil)
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, nil)
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -161,7 +161,7 @@ func TestMatchmakerAddRemoveRepeated(t *testing.T) {
 
 func TestMatchmakerPropertyRegexSubmatch(t *testing.T) {
 	consoleLogger := loggerForTest(t)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, nil)
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, nil)
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -287,7 +287,7 @@ func TestMatchmakerPropertyRegexSubmatch(t *testing.T) {
 
 func TestMatchmakerPropertyRegexSubmatchMultiple(t *testing.T) {
 	consoleLogger := loggerForTest(t)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, nil)
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, nil)
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -380,7 +380,7 @@ func TestMatchmakerPropertyRegexSubmatchMultiple(t *testing.T) {
 // should add and remove from matchmaker
 func TestMatchmakerAddAndRemove(t *testing.T) {
 	consoleLogger := loggerForTest(t)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, nil)
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, nil)
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -415,12 +415,11 @@ func TestMatchmakerAddAndRemove(t *testing.T) {
 func TestMatchmakerAddWithBasicMatch(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -527,12 +526,11 @@ func TestMatchmakerAddWithBasicMatch(t *testing.T) {
 func TestMatchmakerAddWithMatchOnStar(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -645,12 +643,11 @@ func TestMatchmakerAddWithMatchOnStar(t *testing.T) {
 func TestMatchmakerAddWithMatchOnRange(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -763,12 +760,11 @@ func TestMatchmakerAddWithMatchOnRange(t *testing.T) {
 func TestMatchmakerAddWithMatchOnRangeAndValue(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -890,12 +886,11 @@ func TestMatchmakerAddWithMatchOnRangeAndValue(t *testing.T) {
 func TestMatchmakerAddRemoveNotMatch(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -938,12 +933,11 @@ func TestMatchmakerAddRemoveNotMatch(t *testing.T) {
 func TestMatchmakerAddButNotMatch(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -1009,12 +1003,11 @@ func TestMatchmakerAddButNotMatch(t *testing.T) {
 func TestMatchmakerAddButNotMatchOnRange(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -1086,12 +1079,11 @@ func TestMatchmakerAddButNotMatchOnRange(t *testing.T) {
 func TestMatchmakerAddButNotMatchOnRangeAndValue(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -1162,12 +1154,11 @@ func TestMatchmakerAddButNotMatchOnRangeAndValue(t *testing.T) {
 func TestMatchmakerAddMultipleAndSomeMatch(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -1265,12 +1256,11 @@ func TestMatchmakerAddMultipleAndSomeMatch(t *testing.T) {
 func TestMatchmakerAddMultipleAndSomeMatchWithBoost(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -1384,12 +1374,11 @@ func TestMatchmakerAddMultipleAndSomeMatchWithBoost(t *testing.T) {
 func TestMatchmakerAddMultipleAndSomeMatchOptionalTextAlteringScore(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -1487,12 +1476,11 @@ func TestMatchmakerAddMultipleAndSomeMatchOptionalTextAlteringScore(t *testing.T
 func TestMatchmakerAddAndMatchAuthoritative(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -1611,8 +1599,7 @@ func TestMatchmakerAddAndMatchAuthoritative(t *testing.T) {
 //
 // the returned cleanup function should be executed after all test operations are complete
 // to ensure proper resource management
-func createTestMatchmaker(t fatalable, logger *zap.Logger,
-	messageCallback func(presences []*PresenceID, envelope *rtapi.Envelope)) (*LocalMatchmaker, func() error, error) {
+func createTestMatchmaker(t fatalable, logger *zap.Logger, tickerActive bool, messageCallback func(presences []*PresenceID, envelope *rtapi.Envelope)) (*LocalMatchmaker, func() error, error) {
 	cfg := NewConfig(logger)
 	cfg.Database.Addresses = []string{"postgres:postgres@localhost:5432/nakama"}
 	cfg.Matchmaker.IntervalSec = 1
@@ -1675,13 +1662,61 @@ func createTestMatchmaker(t fatalable, logger *zap.Logger,
 		return res, true, nil
 	}
 
-	matchMaker := NewLocalMatchmaker(logger, logger, cfg, messageRouter, runtime)
+	matchMaker := NewLocalBenchMatchmaker(logger, logger, cfg, messageRouter, runtime, tickerActive)
 
 	return matchMaker.(*LocalMatchmaker), func() error {
 		matchMaker.Stop()
 		matchRegistry.Stop(0)
 		return os.RemoveAll(cfg.Runtime.Path)
 	}, nil
+}
+
+// Create a new matchmaker with an additional argument to make the ticker optional
+func NewLocalBenchMatchmaker(logger, startupLogger *zap.Logger, config Config, router MessageRouter, runtime *Runtime, tickerActive bool) Matchmaker {
+	cfg := BlugeInMemoryConfig()
+	indexWriter, err := bluge.OpenWriter(cfg)
+	if err != nil {
+		startupLogger.Fatal("Failed to create matchmaker index", zap.Error(err))
+	}
+
+	ctx, ctxCancelFn := context.WithCancel(context.Background())
+
+	m := &LocalMatchmaker{
+		logger:  logger,
+		node:    config.GetName(),
+		config:  config,
+		router:  router,
+		runtime: runtime,
+
+		active:      atomic.NewUint32(1),
+		stopped:     atomic.NewBool(false),
+		ctx:         ctx,
+		ctxCancelFn: ctxCancelFn,
+
+		batch:          bluge.NewBatch(),
+		indexWriter:    indexWriter,
+		sessionTickets: make(map[string]map[string]struct{}),
+		partyTickets:   make(map[string]map[string]struct{}),
+		entries:        make(map[string][]*MatchmakerEntry),
+		indexes:        make(map[string]*MatchmakerIndex),
+		activeIndexes:  make(map[string]*MatchmakerIndex),
+	}
+
+	if tickerActive {
+		go func() {
+			ticker := time.NewTicker(time.Duration(config.GetMatchmaker().IntervalSec) * time.Second)
+			for {
+				select {
+				case <-ctx.Done():
+					return
+				case <-ticker.C:
+					m.Process()
+				}
+			}
+		}()
+	}
+
+	return m
 }
 
 // should add to matchmaker and NOT match due to not having mutual matching queries/properties
@@ -1691,12 +1726,11 @@ func createTestMatchmaker(t fatalable, logger *zap.Logger,
 func TestMatchmakerRequireMutualMatch(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -1774,12 +1808,11 @@ func TestMatchmakerRequireMutualMatch(t *testing.T) {
 func TestMatchmakerRequireMutualMatchLarger(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -1877,12 +1910,11 @@ func TestMatchmakerRequireMutualMatchLarger(t *testing.T) {
 func TestMatchmakerRequireMutualMatchLargerReversed(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -2077,7 +2109,7 @@ func BenchmarkMatchmakerProcessMediumSomeNonMutualBiggerGroupAndDifficultMatch(b
 func benchmarkMatchmakerHelper(b *testing.B, activeCount, minCount, maxCount, countMultiple int,
 	withQueryAndProps func(i int) (string, map[string]string)) {
 	consoleLogger := loggerForBenchmark(b)
-	matchMaker, cleanup, err := createTestMatchmaker(b, consoleLogger, nil)
+	matchMaker, cleanup, err := createTestMatchmaker(b, consoleLogger, true, nil)
 	if err != nil {
 		b.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -2135,12 +2167,11 @@ var benchmarkPropsFew = map[string]string{
 func TestMatchmakerMaxPartyTracking(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -2217,12 +2248,11 @@ func TestMatchmakerMaxPartyTracking(t *testing.T) {
 func TestMatchmakerMaxSessionTracking(t *testing.T) {
 	consoleLogger := loggerForTest(t)
 	matchesSeen := make(map[string]*rtapi.MatchmakerMatched)
-	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if len(presences) == 1 {
-				matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(t, consoleLogger, true, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if len(presences) == 1 {
+			matchesSeen[presences[0].SessionID.String()] = envelope.GetMatchmakerMatched()
+		}
+	})
 	if err != nil {
 		t.Fatalf("error creating test matchmaker: %v", err)
 	}
@@ -2299,29 +2329,29 @@ func TestMatchmakerMaxSessionTracking(t *testing.T) {
 	}
 }
 
-func benchmarkMatchmakerProcessTickets(ticketsMax int32, b *testing.B) {
+func benchmarkMatchmakerProcessTickets(ticketsMax int32, minCount, maxCount int, b *testing.B) {
 	consoleLogger := loggerForBenchmark(b)
 	consoleLogger.Info("Benchmark running")
 
 	processedTicketsCount := atomic.NewInt32(0)
 	ctx, cancel := context.WithCancel(context.Background())
 
-	matchMaker, cleanup, err := createTestMatchmaker(b, consoleLogger,
-		func(presences []*PresenceID, envelope *rtapi.Envelope) {
-			if processedTicketsCount.Inc() >= ticketsMax {
-				cancel()
-			}
-		})
+	matchMaker, cleanup, err := createTestMatchmaker(b, consoleLogger, false, func(presences []*PresenceID, envelope *rtapi.Envelope) {
+		if processedTicketsCount.Inc() >= ticketsMax {
+			cancel()
+		}
+	})
 	if err != nil {
 		b.Fatalf("error creating test matchmaker: %v", err)
 	}
 	defer cleanup()
 
-	b.ResetTimer()
-
 	waitGroup := sync.WaitGroup{}
 	waitGroup.Add(int(ticketsMax))
+
+	b.ResetTimer()
 	for n := 0; n < b.N; n++ {
+		b.StopTimer()
 		for i := 0; i < int(ticketsMax); i++ {
 			go func() {
 				sessionID, _ := uuid.NewV4()
@@ -2339,7 +2369,7 @@ func benchmarkMatchmakerProcessTickets(ticketsMax int32, b *testing.B) {
 					},
 				}, sessionIDStr, "",
 					"*",
-					2, 2, 1, map[string]string{},
+					minCount, maxCount, 1, map[string]string{},
 					map[string]float64{},
 				)
 				if err != nil {
@@ -2349,6 +2379,8 @@ func benchmarkMatchmakerProcessTickets(ticketsMax int32, b *testing.B) {
 			}()
 		}
 
+		waitGroup.Wait()
+		b.StartTimer()
 		matchMaker.Process()
 
 		select {
@@ -2358,15 +2390,28 @@ func benchmarkMatchmakerProcessTickets(ticketsMax int32, b *testing.B) {
 	}
 }
 
-func BenchmarkMatchmakerProcessElapsedTimeTickets100(b *testing.B) {
-	benchmarkMatchmakerProcessTickets(10, b)
+/*func BenchmarkMatchmakerProcessTickets100_min2_max2(b *testing.B) {
+	benchmarkMatchmakerProcessTickets(100, 2, 2, b)
 }
-func BenchmarkMatchmakerProcessElapsedTimeTickets1_000(b *testing.B) {
-	benchmarkMatchmakerProcessTickets(1_000, b)
+func BenchmarkMatchmakerProcessTickets1_000_min2_max2(b *testing.B) {
+	benchmarkMatchmakerProcessTickets(1_000, 2, 2, b)
 }
-func BenchmarkMatchmakerProcessElapsedTimeTickets10_000(b *testing.B) {
-	benchmarkMatchmakerProcessTickets(10_000, b)
+func BenchmarkMatchmakerProcessTickets10_000_min2_max2(b *testing.B) {
+	benchmarkMatchmakerProcessTickets(10_000, 2, 2, b)
 }
-func BenchmarkMatchmakerProcessElapsedTimeTickets100_000(b *testing.B) {
-	benchmarkMatchmakerProcessTickets(100_000, b)
+func BenchmarkMatchmakerProcessTickets100_000_min2_max2(b *testing.B) {
+	benchmarkMatchmakerProcessTickets(100_000, 2, 2, b)
+}*/
+
+func BenchmarkMatchmakerProcessTickets100(b *testing.B) {
+	benchmarkMatchmakerProcessTickets(100, 4, 4, b)
+}
+func BenchmarkMatchmakerProcessTickets1_000(b *testing.B) {
+	benchmarkMatchmakerProcessTickets(1_000, 4, 4, b)
+}
+func BenchmarkMatchmakerProcessTickets10_000(b *testing.B) {
+	benchmarkMatchmakerProcessTickets(10_000, 4, 4, b)
+}
+func BenchmarkMatchmakerProcessTickets100_000(b *testing.B) {
+	benchmarkMatchmakerProcessTickets(100_000, 4, 4, b)
 }
